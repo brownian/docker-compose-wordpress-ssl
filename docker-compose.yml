@@ -31,8 +31,8 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - /var/www/html/example/wp-content:/var/www/html/wp-content
-      - /var/www/html/example/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ./custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - wordpress:/var/www/html
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: wp_db_user
@@ -45,12 +45,14 @@ services:
     image: mysql:5.7
     container_name: db
     volumes:
-      - /var/lib/mysql:/var/lib/mysql
+      - db:/var/lib/mysql
     restart: always
-    ports:
-      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: mysql_root_pass
       MYSQL_DATABASE: wp_db_name
       MYSQL_USER: wp_db_user
       MYSQL_PASSWORD: wp_db_pass
+
+volumes:
+  db:
+  wordpress:
